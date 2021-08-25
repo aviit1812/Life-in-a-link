@@ -203,25 +203,31 @@ if(isset($_POST['method']))
 	
 	if($_POST['method'] == "profileupdate"){
 		$uid = $_SESSION["user_id"];
+		$s = $link->rawQueryOne("select * from user where user_id = ?",array($uid));
 		
-		echo $_FILES['imgup']['name'];
-		// $img = $_FILES['img_name']['name'];
-		// $ext = pathinfo($img,PATHINFO_EXTENSION);
-		// $image = "ground_category".$i.".".$ext;
+		if($s['user_image'] != NULL || $s['user_image'] != ""){
+				if($s['user_image'] == "images/default_user_profile.png"){ 
+
+				}else{
+					unlink($s['user_image']);
+				}
+		}
+
+		$img = $_FILES['imgupload']['name'];
+		$ext = pathinfo($img,PATHINFO_EXTENSION);
+		$image = "user_profile_".$uid.".".$ext;
+			
+		if(move_uploaded_file($_FILES['imgupload']['tmp_name'],"uploads/".$image))
+		{
+			$link->where("user_id",$uid);
+			$sql2=$link->update("user",array('user_image'=>"uploads/".$image));
+			echo "uploads/".$image;
+		}
+		else{
+			echo "fail";
+		}
 		
-		// if(move_uploaded_file($_FILES['img_name']['tmp_name'],"uploads/ground_category/".$image))
-		// {
-			// $link->where("g_category_id",$i);
-			// $link->update("ground_category",array("g_category_image"=>"uploads/ground_category/".$image));
-		// }
-		// $link->where("user_id",$uid);
-		// $sql2=$link->update("user",array());
-		// if($sql2){
-			// echo "success";
-		// }
-		// else{
-			// echo "fail";
-		// }
+	
 	}
 }
 ?>

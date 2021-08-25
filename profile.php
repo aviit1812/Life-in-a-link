@@ -1,6 +1,13 @@
 <?php 
 session_start();
 include 'connection.php';
+if(isset($_SESSION["user_id"])){
+    $user = $link->rawQueryOne("select * from user where user_id = ?",array($_SESSION["user_id"]));
+}
+else{
+    header("location:login.php");
+}
+
 ?>
 <html lang="en">
     
@@ -89,12 +96,6 @@ include 'connection.php';
     padding: 0.2em;
     height: 2em;
   }
-
-
-
-
-
-
 		</style>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
@@ -262,15 +263,15 @@ include 'connection.php';
                     <div class="container">
                         <div class="page-title-inner text-center clearfix">
                             <div class="heading-wrapper">
-							<form id="imgform">
+							<form id="imgform" method="POST" enctype="multipart/form-data">
 							<input type="hidden" name="method" value="profileupdate" />
 								<div class="profile-pic">
 								  <label class="label" for="imgupload">
 									<i class="fas fa-camera"></i>
 									<span style="font-family: 'Lato', sans-serif;">Change Image</span>
 								  </label>
-								  <input id="imgupload" name="imgupload" type="file" onchange="loadFile(event)"/>
-								  <img src="images/team-3-square.jpg" id="output" width="200" />
+								  <input id="imgupload" name="imgupload" type="file" onchange="loadFile(this.form)"/>
+								  <img src="<?php echo $user['user_image']; ?>" id="output" width="200" />
 								</div>
 							</form>
 								

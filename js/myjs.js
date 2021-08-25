@@ -297,30 +297,33 @@ function deletelink(){
 	return false;
 }
 
-function loadFile(event) {
-		var uploadval = event.target.files[0];
-		// var image = document.getElementById('output');
+function loadFile(theForm) {
+		// var uploadval = event.target.files[0];
+		// var imgcontrol = document.getElementById('imgupload').value;
+		// var ext = imgcontrol.substring(imgcontrol.lastIndexOf('.') + 1).toLowerCase();
+		// var img_tmpname = event.target.files[0];
+		 var image = document.getElementById('output');
+		// image.src = URL.createObjectURL(event.target.files[0]);
 
-			 var imgvalue = document.getElementById('imgupload');
-			// alert(imgvalue.files[0]['tmp_name']);
-			 var method = "profileupdate";
-			$.ajax({
-				type:'post',
-				url:'phpmethod.php',
-				data:{
-					method:method,
-					imgup:imgvalue
-				},
+		var formData = new FormData(theForm);
+
+		var method = "profileupdate";
+		$.ajax({
+				type: 'post',
+				url: 'phpmethod.php',
+				data: formData,
+				contentType: false,      
+				cache: false,          
+				processData:false,  
 				success:function(response) {
-					// if(response == "success"){
-						// image.src = URL.createObjectURL(event.target.files[0]);
-						alert(response);
-					// }
-					// else{
-						// alert("error");
-					// }
+					if(response == "fail"){
+						alert("Error in Image Update");
+					}
+					else{
+						image.src = response;
+					}
 				}
-			});
+		});
 			
 			return false;
 		  }
