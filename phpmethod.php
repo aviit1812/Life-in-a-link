@@ -229,5 +229,20 @@ if(isset($_POST['method']))
 		
 	
 	}
+
+	if($_POST['method'] == "nameupdate"){
+
+		$uid = $_SESSION["user_id"];
+		$uname = $_POST['uname'];
+
+		$link->where("user_id",$uid);
+		$sql2=$link->update("user",array('name'=>$uname));
+		if($sql2){
+			echo "success";
+		}
+		else{
+			echo "fail";
+		}
+	}
 }
 ?>

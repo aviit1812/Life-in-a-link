@@ -96,6 +96,19 @@ else{
     padding: 0.2em;
     height: 2em;
   }
+
+  .myinput{
+    width: 18%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-bottom: 1px solid white;
+    text-align: center;
+  }
+  
+  .myinput:focus-visible{
+    outline: none;
+  }
 		</style>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
@@ -275,9 +288,14 @@ else{
 								</div>
 							</form>
 								
-                               <!-- <img src="images/team-3-square.jpg" style="width:200px;height:200px;border-radius:100px;"/>  -->
-                                <div class="lead-text">
-                                    <p>Avi Patel</p>
+                            <h1 id="name_dis" class="h3" style="margin-top: 15px;" onclick="document.getElementById('name_dis').style.display = 'none';document.getElementById('name_update').style.display = 'block';"><?php echo $user['name']; ?></h1>
+                                <div id="name_update" class="lead-text" style="display:none;margin-top: 11px;">
+                                    <form method="post" onsubmit="return name_update()">
+                                        <input type="text" class="myinput" name="user_name" id="user_name" value="<?php echo $user['name']; ?>" />
+                                        <button type="submit" style="color: white;background: #3037c6;border: 1px solid rgba(255,255,255,0.2);padding: 6px;"> <i class="fas fa-edit"> </i> </button> &nbsp;&nbsp;
+                                        <span onclick="document.getElementById('name_update').style.display = 'none';document.getElementById('name_dis').style.display = 'block';" style="font-size: 25px;" >&times;</span>  
+                                    </form>
+                                    
                                 </div>
                             </div><!-- End Heading -->
                            

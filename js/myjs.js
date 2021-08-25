@@ -327,3 +327,34 @@ function loadFile(theForm) {
 			
 			return false;
 		  }
+
+function name_update(){
+
+	var uname = $("#user_name").val();
+	var method = "nameupdate";
+
+	$.ajax({
+		type:'post',
+		url:'phpmethod.php',
+		data:{
+			method:method,
+			uname:uname
+		},
+		success:function(response) {
+			if(response == "success"){
+				
+				document.getElementById('name_dis').innerText = uname;
+				document.getElementById('user_name').value = uname;
+				document.getElementById('name_update').style.display = 'none';
+				document.getElementById('name_dis').style.display = 'block';
+			}
+			else{
+				alert("error");
+			}
+		}
+	});
+	
+	return false;
+
+
+}
